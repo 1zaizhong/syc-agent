@@ -12,3 +12,4 @@ Service 层:实现业务流程
 <img width="1878" height="907" alt="image" src="https://github.com/user-attachments/assets/072d8a9e-028b-46b0-a2d0-52fcae990777" />
 通过日志,你可以看到系统调用哪些工具,消耗多少token,并根据token和大模型版本计算成本,实现调用链路和成本的可视化,使大模型的ReAct不再是黑盒,保护成本保护安全.
 <img width="1814" height="779" alt="image" src="https://github.com/user-attachments/assets/f3cca858-510a-4923-b3c1-491ffe8fc525" />
+如果你对本项目感兴趣,拉取代码以后,配置自己的数据库和redis即可
