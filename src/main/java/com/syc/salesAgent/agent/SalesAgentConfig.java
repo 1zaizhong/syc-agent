@@ -4,6 +4,7 @@ import com.syc.salesAgent.memory.MysqlChatMemoryStore;
 import com.syc.salesAgent.tools.*;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class SalesAgentConfig {
 
     private final ChatModel chatLanguageModel;
+    private final StreamingChatModel streamingChatModel;
     private final SalesQueryTool salesQueryTool;
     private final SalesSummaryTool salesSummaryTool;
     private final SalesTrendTool salesTrendTool;
@@ -25,6 +27,7 @@ public class SalesAgentConfig {
     public SalesAgent salesAgent() {
         return AiServices.builder(SalesAgent.class)
                 .chatModel(chatLanguageModel)
+                .streamingChatModel(streamingChatModel)
                 .tools(salesQueryTool,
                        salesSummaryTool,
                        salesTrendTool,
@@ -36,6 +39,7 @@ public class SalesAgentConfig {
                                 .maxMessages(20)         // 保留最近 20 条消息
                                 .chatMemoryStore(chatMemoryStore)
                                 .build())
+
                 .build();
     }
 }

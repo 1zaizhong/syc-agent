@@ -32,7 +32,7 @@ public class ChartGeneratorTool {
             @P("大区名称，如：华东区。传 null 表示全公司") String regionName,
             @P("图表标题，如：华东区近6个月销售趋势") String title) {
 
-        log.info("工具调用-generateLineChart: months={}, region={}", months, regionName);
+        log.info("销售趋势折线图工具调用-generateLineChart: months={}, region={}", months, regionName);
 
         try {
             Long regionId = regionName != null && !regionName.isBlank()
@@ -79,7 +79,7 @@ public class ChartGeneratorTool {
             @P("查询结束日期，格式 yyyy-MM-dd") String endDate,
             @P("图表标题") String title) {
 
-        log.info("工具调用-generateBarChart: dim={}, start={}, end={}", dimension, startDate, endDate);
+        log.info("销售额对比柱状图工具调用-generateBarChart: dim={}, start={}, end={}", dimension, startDate, endDate);
 
         try {
             LocalDate start = LocalDate.parse(startDate);
@@ -134,7 +134,7 @@ public class ChartGeneratorTool {
             @P("查询结束日期，格式 yyyy-MM-dd") String endDate,
             @P("图表标题") String title) {
 
-        log.info("工具调用-generatePieChart: dim={}, start={}, end={}", dimension, startDate, endDate);
+        log.info("销售占比饼图工具调用-generatePieChart: dim={}, start={}, end={}", dimension, startDate, endDate);
 
         try {
             LocalDate start = LocalDate.parse(startDate);

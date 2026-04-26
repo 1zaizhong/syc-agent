@@ -42,7 +42,7 @@ public class AnomalyDetectionTool {
          "无需传入参数，系统自动全面扫描。")
     public String detectAllAnomalies() {
 
-        log.info("工具调用-detectAllAnomalies: 开始全面异常检测");
+        log.info("异常工具调用-detectAllAnomalies: 开始全面异常检测");
 
         List<AnomalyDTO> anomalies = new ArrayList<>();
 

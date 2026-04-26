@@ -33,7 +33,7 @@ public class SalesSummaryTool {
             @P("大区名称，如：华东区。传 null 或空字符串表示查全公司") String regionName,
             @P("返回前 N 名，默认 5，最大 20") int topN) {
 
-        log.info("工具调用-getTopReps: start={}, end={}, region={}, topN={}",
+        log.info("销售员业绩排名工具调用-getTopReps: start={}, end={}, region={}, topN={}",
                 startDate, endDate, regionName, topN);
 
         try {
@@ -76,7 +76,7 @@ public class SalesSummaryTool {
             @P("查询开始日期，格式 yyyy-MM-dd") String startDate,
             @P("查询结束日期，格式 yyyy-MM-dd") String endDate) {
 
-        log.info("工具调用-getRegionRanking: start={}, end={}", startDate, endDate);
+        log.info("大区排行榜工具调用-getRegionRanking: start={}, end={}", startDate, endDate);
 
         try {
             LocalDate start = LocalDate.parse(startDate);
@@ -123,7 +123,7 @@ public class SalesSummaryTool {
             @P("查询结束日期，格式 yyyy-MM-dd") String endDate,
             @P("返回前 N 名，默认 10，最大 20。负数表示查最差的 N 名") int topN) {
 
-        log.info("工具调用-getTopProducts: start={}, end={}, topN={}", startDate, endDate, topN);
+        log.info("产品销售排名工具调用-getTopProducts: start={}, end={}, topN={}", startDate, endDate, topN);
 
         try {
             LocalDate start = LocalDate.parse(startDate);
@@ -175,7 +175,7 @@ public class SalesSummaryTool {
             @P("查询结束日期，格式 yyyy-MM-dd") String endDate,
             @P("大区名称，如：华东区。传 null 表示查全公司") String regionName) {
 
-        log.info("工具调用-getSalesSummary: start={}, end={}, region={}", startDate, endDate, regionName);
+        log.info("某时段总销售额汇总工具调用-getSalesSummary:整体业绩;start={}, end={}, region={}", startDate, endDate, regionName);
 
         try {
             LocalDate start = LocalDate.parse(startDate);

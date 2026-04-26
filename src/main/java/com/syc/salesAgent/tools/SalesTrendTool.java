@@ -34,7 +34,7 @@ public class SalesTrendTool {
             @P("对比周期结束日期，格式 yyyy-MM-dd。传 null 则自动计算上一个等长周期") String prevEnd,
             @P("大区名称，如：华东区。传 null 表示全公司") String regionName) {
 
-        log.info("工具调用-calcMonthOverMonth: current={}/{}, prev={}/{}, region={}",
+        log.info("销售环比增长率工具调用-calcMonthOverMonth: current={}/{}, prev={}/{}, region={}",
                 currentStart, currentEnd, prevStart, prevEnd, regionName);
 
         try {
@@ -100,7 +100,7 @@ public class SalesTrendTool {
             @P("查询结束日期，格式 yyyy-MM-dd（今年的日期）") String endDate,
             @P("大区名称，如：华东区。传 null 表示全公司") String regionName) {
 
-        log.info("工具调用-calcYearOverYear: start={}, end={}, region={}", startDate, endDate, regionName);
+        log.info("同比分析工具调用-calcYearOverYear: start={}, end={}, region={}", startDate, endDate, regionName);
 
         try {
             LocalDate start = LocalDate.parse(startDate);
@@ -149,7 +149,7 @@ public class SalesTrendTool {
             @P("查看近多少个月，如 6 表示近 6 个月，最大 24") int months,
             @P("大区名称，如：华东区。传 null 表示全公司") String regionName) {
 
-        log.info("工具调用-getMonthlyTrend: months={}, region={}", months, regionName);
+        log.info("月度趋势序列工具调用-getMonthlyTrend: months={}, region={}", months, regionName);
 
         try {
             int m = Math.min(Math.max(months, 1), 24);

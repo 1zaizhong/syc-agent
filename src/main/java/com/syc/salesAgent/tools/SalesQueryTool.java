@@ -32,7 +32,7 @@ public class SalesQueryTool {
             @P("销售员姓名，如需按特定销售员筛选则传入，如：张磊。否则传 null 或空字符串") String repName,
             @P("最多返回条数，默认 20，最大 50。避免返回数据过多") int limit){
 
-        log.info("工具调用:queryOrders: start={} ,end={},region={},repName={},limit={} ",
+        log.info("原始销售订单数据工具调用:queryOrders: start={} ,end={},region={},repName={},limit={} ",
                 startDate,endDate,regionName,repName,limit);
         try {
             LocalDate start = LocalDate.parse(startDate);
