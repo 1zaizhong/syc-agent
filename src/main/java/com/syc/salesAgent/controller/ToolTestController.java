@@ -1,25 +1,19 @@
 package com.syc.salesAgent.controller;
 
-import com.syc.salesAgent.tools.ChartGeneratorTool;
-import com.syc.salesAgent.tools.SalesQueryTool;
-import com.syc.salesAgent.tools.SalesSummaryTool;
-import com.syc.salesAgent.tools.SalesTrendTool;
+import com.syc.salesAgent.tools.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test/tool")
+@RequiredArgsConstructor
 public class ToolTestController {
 
     private final SalesQueryTool salesQueryTool;
     private final SalesSummaryTool salesSummaryTool;
     private final SalesTrendTool salesTrendTool;
     private final ChartGeneratorTool chartGeneratorTool;
-    public ToolTestController(SalesQueryTool salesQueryTool, SalesSummaryTool salesSummaryTool, SalesTrendTool salesTrendTool, ChartGeneratorTool chartGeneratorTool) {
-        this.salesQueryTool = salesQueryTool;
-        this.salesSummaryTool = salesSummaryTool;
-        this.salesTrendTool = salesTrendTool;
-        this.chartGeneratorTool = chartGeneratorTool;
-    }
+    private final AnomalyDetectionTool anomalyDetectionTool;
 
     record QueryRequest(String startDate, String endDate,
                         String regionName, String repName, int limit) {}
@@ -93,5 +87,10 @@ public class ToolTestController {
     public String pieChart(@RequestBody PieChartRequest req) {
         return chartGeneratorTool.generatePieChart(
                 req.dimension(), req.startDate(), req.endDate(), req.title());
+    }
+    // -------- 工具五 --------
+    @PostMapping("/detect-anomalies")
+    public String detectAnomalies() {
+        return anomalyDetectionTool.detectAllAnomalies();
     }
 }
