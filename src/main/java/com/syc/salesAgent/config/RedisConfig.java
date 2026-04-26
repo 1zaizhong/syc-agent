@@ -61,6 +61,7 @@ public class RedisConfig {
         GenericJackson2JsonRedisSerializer jsonSerializer =
                 new GenericJackson2JsonRedisSerializer(redisObjectMapper());
 
+        // 默认缓存配置,失效时间,key,value序列化方式
         RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(5))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair

@@ -7,6 +7,7 @@ import com.syc.salesAgent.repository.*;
 import com.syc.salesAgent.security.UserContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -85,7 +86,11 @@ public class SalesQueryService {
     /**
      * 销售员业绩排名（带姓名、大区信息）
      */
+    // 排名数据缓存 5 分钟
+    @Cacheable(value = "rep-ranking",
+            key = "#start.toString() + '_' + #end.toString() + '_' + #topN")
     public List<RepSalesDTO> queryRepRanking(LocalDate start, LocalDate end, int topN) {
+        log.debug("查询销售员排名（未命中缓存）: start={}, end={}", start, end);
         List<Object[]> raw = orderRepository.findRepRanking(start, end);
 
         // 批量查询销售员信息，避免 N+1
@@ -114,7 +119,10 @@ public class SalesQueryService {
     /**
      * 大区业绩排名
      */
+    @Cacheable(value = "region-ranking",
+            key = "#start.toString() + '_' + #end.toString()")
     public List<RegionSalesDTO> queryRegionRanking(LocalDate start, LocalDate end) {
+        log.debug("查询大区排名（未命中缓存）");
         List<Object[]> raw = orderRepository.findRegionRanking(start, end);
         Map<Long, String> regionNameMap = regionRepository.findAll().stream()
                 .collect(Collectors.toMap(r -> r.getId(), r -> r.getName()));
@@ -156,7 +164,10 @@ public class SalesQueryService {
     /**
      * 月度趋势数据（近 N 个月）
      */
+    @Cacheable(value = "monthly-trend",
+            key = "(#regionId == null ? 'all' : #regionId.toString()) + '_' + #months")
     public List<MonthlyTrendDTO> queryMonthlyTrend(Long regionId, int months) {
+        log.debug("查询月度趋势（未命中缓存）: regionId={}, months={}", regionId, months);
         LocalDate end = LocalDate.now();
         LocalDate start = end.minusMonths(months).withDayOfMonth(1);
 
@@ -222,6 +233,8 @@ public class SalesQueryService {
                 .orElse("未知大区");
     }
 
+    // 大区名称 → ID 映射缓存（几乎不变）
+    @Cacheable(value = "region-meta", key = "#regionName")
     public Long getRegionIdByName(String regionName) {
         return regionRepository.findByName(regionName)
                 .map(r -> r.getId())
