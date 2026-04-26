@@ -3,6 +3,7 @@ package com.syc.salesAgent.tools;
 import com.syc.salesAgent.dto.ProductSalesDTO;
 import com.syc.salesAgent.dto.RegionSalesDTO;
 import com.syc.salesAgent.dto.RepSalesDTO;
+import com.syc.salesAgent.security.ToolInputValidator;
 import com.syc.salesAgent.service.SalesQueryService;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
@@ -21,7 +22,7 @@ import java.util.List;
 public class SalesSummaryTool {
 
     private final SalesQueryService queryService;
-
+    private final ToolInputValidator validator;  // 注入校验器
     /**
      * 销售员业绩排名
      */
@@ -37,8 +38,10 @@ public class SalesSummaryTool {
                 startDate, endDate, regionName, topN);
 
         try {
-            LocalDate start = LocalDate.parse(startDate);
-            LocalDate end = LocalDate.parse(endDate);
+            LocalDate start = LocalDate.parse(validator.validateDate(startDate));
+            LocalDate end = LocalDate.parse(validator.validateDate(endDate));
+            String validRegion = validator.validateRegionName(regionName);  // 白名单校验
+
             int n = Math.min(Math.max(topN, 1), 20);
 
             //查销售排名
@@ -59,11 +62,8 @@ public class SalesSummaryTool {
             }
             return sb.toString();
 
-        } catch (DateTimeParseException e) {
-            return "日期格式错误，请使用 yyyy-MM-dd 格式";
-        } catch (Exception e) {
-            log.error("查询销售员排名失败", e);
-            return "查询排名数据时出现问题，请稍后重试";
+        } catch (IllegalArgumentException e) {
+            return "参数无效：" + e.getMessage();
         }
     }
 
