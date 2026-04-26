@@ -1,4 +1,4 @@
-package com.syc.agent;
+package com.syc.salesAgent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
